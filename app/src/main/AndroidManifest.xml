@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Permission Internet pour Phase 2 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Material3.Light"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+
+        <!-- ÉCRAN DE CONNEXION - Point d'entrée -->
+        <activity
+            android:name="com.superowl.rftg.luigi.ConnexionActivity"
+            android:exported="true"
+            android:label="Connexion Luigi">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Liste des films -->
+        <activity
+            android:name="com.superowl.rftg.luigi.ListeFilmsActivity"
+            android:exported="false"
+            android:label="Films Disponibles"
+            android:parentActivityName="com.superowl.rftg.luigi.ConnexionActivity"/>
+
+        <!-- Détails film -->
+        <activity
+            android:name="com.superowl.rftg.luigi.DetailsFilmActivity"
+            android:exported="false"
+            android:label="Détails du Film"
+            android:parentActivityName="com.superowl.rftg.luigi.ListeFilmsActivity"/>
+
+        <!-- Panier -->
+        <activity
+            android:name="com.superowl.rftg.luigi.PanierActivity"
+            android:exported="false"
+            android:label="Mon Panier"
+            android:parentActivityName="com.superowl.rftg.luigi.ListeFilmsActivity"/>
+
+        <!-- Validation commande -->
+        <activity
+            android:name="com.superowl.rftg.luigi.ValidationCommandeActivity"
+            android:exported="false"
+            android:label="Validation"
+            android:parentActivityName="com.superowl.rftg.luigi.PanierActivity"/>
+
+    </application>
+
+</manifest>
