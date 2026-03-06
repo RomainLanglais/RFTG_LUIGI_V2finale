@@ -21,7 +21,6 @@ import java.util.ArrayList;
 public class ValidationCommandeActivity extends AppCompatActivity {
 
     private TextView tvRecap;
-    private TextView tvTotal;
     private Button btnConfirmer;
     private Button btnAnnuler;
 
@@ -32,7 +31,6 @@ public class ValidationCommandeActivity extends AppCompatActivity {
 
         // Initialisation
         tvRecap = findViewById(R.id.tvRecap);
-        tvTotal = findViewById(R.id.tvTotal);
         btnConfirmer = findViewById(R.id.btnConfirmer);
         btnAnnuler = findViewById(R.id.btnAnnuler);
 
@@ -64,12 +62,10 @@ public class ValidationCommandeActivity extends AppCompatActivity {
 
         for (int i = 0; i < films.size(); i++) {
             Film film = films.get(i);
-            recap.append((i + 1)).append(". ").append(film.getTitle())
-                 .append("\n   ").append(film.getPrixFormate()).append("\n\n");
+            recap.append((i + 1)).append(". ").append(film.getTitle()).append("\n\n");
         }
 
         tvRecap.setText(recap.toString());
-        tvTotal.setText(String.format("%.2f€", PanierManager.getTotal()));
     }
 
     /**
@@ -81,8 +77,7 @@ public class ValidationCommandeActivity extends AppCompatActivity {
     private void confirmerCommande() {
         // BOUCHON : Simuler l'enregistrement
         String message = "✅ Commande validée avec succès !\n\n" +
-                        "📦 Nombre de films : " + PanierManager.getNombre() + "\n" +
-                        "💰 Total : " + String.format("%.2f€", PanierManager.getTotal()) + "\n\n" +
+                        "📦 Nombre de films : " + PanierManager.getNombre() + "\n\n" +
                         "Merci " + SessionManager.getUtilisateur().getPrenom() + " !";
 
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();

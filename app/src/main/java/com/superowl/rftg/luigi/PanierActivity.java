@@ -21,7 +21,6 @@ import java.util.ArrayList;
 public class PanierActivity extends AppCompatActivity {
 
     private ListView listViewPanier;
-    private TextView tvTotal;
     private TextView tvNombre;
     private Button btnVider;
     private Button btnValider;
@@ -34,7 +33,6 @@ public class PanierActivity extends AppCompatActivity {
 
         // Initialisation
         listViewPanier = findViewById(R.id.listViewPanier);
-        tvTotal = findViewById(R.id.tvTotal);
         tvNombre = findViewById(R.id.tvNombre);
         btnVider = findViewById(R.id.btnVider);
         btnValider = findViewById(R.id.btnValider);
@@ -65,10 +63,8 @@ public class PanierActivity extends AppCompatActivity {
         listViewPanier.setAdapter(adapter);
 
         int nombre = PanierManager.getNombre();
-        double total = PanierManager.getTotal();
 
         tvNombre.setText(nombre + " film(s) dans le panier");
-        tvTotal.setText(String.format("%.2f€", total));
 
         // Désactiver validation si panier vide
         btnValider.setEnabled(nombre > 0);

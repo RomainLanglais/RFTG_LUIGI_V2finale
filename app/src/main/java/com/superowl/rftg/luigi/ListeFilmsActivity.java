@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +30,7 @@ public class ListeFilmsActivity extends AppCompatActivity {
     private TextView tvBienvenue;
     private ListView listViewFilms;
     private Button btnPanier;
+    private ProgressBar progressBar;
     private ArrayList<Film> listeFilms;
     private ArrayAdapter<Film> adapter;
     private FilmDAO filmDAO;
@@ -51,6 +53,7 @@ public class ListeFilmsActivity extends AppCompatActivity {
         tvBienvenue = findViewById(R.id.tvBienvenue);
         listViewFilms = findViewById(R.id.listViewFilms);
         btnPanier = findViewById(R.id.btnPanier);
+        progressBar = findViewById(R.id.progressBar);
 
         // Message de bienvenue
         tvBienvenue.setText("Bonjour " + SessionManager.getUtilisateur().getPrenom() + " ! 👋");
@@ -87,10 +90,12 @@ public class ListeFilmsActivity extends AppCompatActivity {
      * Charger les films depuis le backend REST
      */
     private void chargerFilms() {
+        progressBar.setVisibility(View.VISIBLE);
         new Thread(() -> {
             ArrayList<Film> films = filmDAO.getAllFilms();
 
             runOnUiThread(() -> {
+                progressBar.setVisibility(View.GONE);
                 listeFilms.clear();
                 listeFilms.addAll(films);
                 adapter.notifyDataSetChanged();
@@ -103,7 +108,6 @@ public class ListeFilmsActivity extends AppCompatActivity {
         intent.putExtra("FILM_ID", film.getFilmId());
         intent.putExtra("FILM_TITLE", film.getTitle());
         intent.putExtra("FILM_DESCRIPTION", film.getDescription());
-        intent.putExtra("FILM_RENTAL_RATE", film.getRentalRate());
         startActivity(intent);
     }
 

@@ -25,19 +25,6 @@ public class PanierManager {
     }
 
     /**
-     * Calculer le total du panier
-     */
-    public static double getTotal() {
-        double total = 0;
-        for (Film film : films) {
-            if (film.getRentalRate() != null) {
-                total += film.getRentalRate();
-            }
-        }
-        return total;
-    }
-
-    /**
      * Vider le panier
      */
     public static void vider() {

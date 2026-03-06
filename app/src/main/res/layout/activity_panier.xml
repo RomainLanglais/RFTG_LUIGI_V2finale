@@ -48,44 +48,6 @@
         android:layout_margin="16dp"
         android:padding="8dp"/>
 
-    <!-- Total -->
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:elevation="4dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#E8F5E9"
-            android:padding="20dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="💰 TOTAL"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#2E7D32"
-                android:gravity="center"
-                android:paddingBottom="8dp"/>
-
-            <TextView
-                android:id="@+id/tvTotal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="0.00€"
-                android:textSize="32sp"
-                android:textStyle="bold"
-                android:textColor="#4CAF50"
-                android:gravity="center"/>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
     <!-- Boutons -->
     <LinearLayout
         android:layout_width="match_parent"

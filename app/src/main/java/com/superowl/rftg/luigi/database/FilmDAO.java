@@ -1,7 +1,7 @@
 package com.superowl.rftg.luigi.database;
 
 import com.superowl.rftg.luigi.models.Film;
-import com.superowl.rftg.luigi.utils.SessionManager;
+import com.superowl.rftg.luigi.UrlManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -24,7 +24,7 @@ public class FilmDAO {
         ArrayList<Film> films = new ArrayList<>();
 
         try {
-            String token = SessionManager.getToken();
+            String token = UrlManager.getJwtToken();
             String response = ApiHelper.get("/films", token);
             if (response == null) {
                 return films;
@@ -37,9 +37,8 @@ public class FilmDAO {
                 int filmId = filmJson.getInt("filmId");
                 String title = filmJson.optString("title", "");
                 String description = filmJson.optString("description", "");
-                double rentalRate = filmJson.optDouble("rentalRate", 0.0);
 
-                films.add(new Film(filmId, title, description, rentalRate));
+                films.add(new Film(filmId, title, description));
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,5 +1,7 @@
 package com.superowl.rftg.luigi.database;
 
+import com.superowl.rftg.luigi.UrlManager;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -12,14 +14,16 @@ import java.net.URL;
  */
 public class ApiHelper {
 
-    // 10.0.2.2 = localhost de la machine hôte depuis l'émulateur Android
-    public static final String BASE_URL = "http://10.0.2.2:8180";
+    // URL dynamique gérée par UrlManager (choix local/distant via Spinner)
+    private static String getBaseUrl() {
+        return UrlManager.getURLConnexion();
+    }
 
     /**
      * Requête GET avec token JWT
      */
     public static String get(String endpoint, String token) throws Exception {
-        URL url = new URL(BASE_URL + endpoint);
+        URL url = new URL(getBaseUrl() + endpoint);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
@@ -44,7 +48,7 @@ public class ApiHelper {
      * Requête POST avec body JSON
      */
     public static String post(String endpoint, String jsonBody) throws Exception {
-        URL url = new URL(BASE_URL + endpoint);
+        URL url = new URL(getBaseUrl() + endpoint);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");

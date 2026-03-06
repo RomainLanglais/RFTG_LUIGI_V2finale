@@ -18,7 +18,6 @@ public class DetailsFilmActivity extends AppCompatActivity {
 
     private TextView tvTitle;
     private TextView tvDescription;
-    private TextView tvPrice;
     private Button btnAjouterPanier;
     private Film filmActuel;
 
@@ -30,7 +29,6 @@ public class DetailsFilmActivity extends AppCompatActivity {
         // Initialisation
         tvTitle = findViewById(R.id.tvTitle);
         tvDescription = findViewById(R.id.tvDescription);
-        tvPrice = findViewById(R.id.tvPrice);
         btnAjouterPanier = findViewById(R.id.btnAjouterPanier);
 
         // Récupérer les données
@@ -50,15 +48,13 @@ public class DetailsFilmActivity extends AppCompatActivity {
         Integer id = getIntent().getIntExtra("FILM_ID", 0);
         String title = getIntent().getStringExtra("FILM_TITLE");
         String description = getIntent().getStringExtra("FILM_DESCRIPTION");
-        Double rentalRate = getIntent().getDoubleExtra("FILM_RENTAL_RATE", 0.0);
 
-        filmActuel = new Film(id, title, description, rentalRate);
+        filmActuel = new Film(id, title, description);
     }
 
     private void afficher() {
         tvTitle.setText(filmActuel.getTitle());
         tvDescription.setText(filmActuel.getDescription());
-        tvPrice.setText("Prix : " + filmActuel.getPrixFormate());
     }
 
     /**

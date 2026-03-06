@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:fillViewport="true">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="24dp"
-    android:background="#F5F5F5"
     android:gravity="center">
 
     <!-- Logo / Titre -->
@@ -85,10 +90,50 @@
                 android:layout_height="50dp"
                 android:hint="Entrez votre mot de passe"
                 android:inputType="textPassword"
+                android:imeOptions="actionDone"
                 android:textSize="16sp"
                 android:padding="12dp"
                 android:background="@android:drawable/edit_text"
                 android:layout_marginBottom="24dp"/>
+
+            <!-- Label serveur -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Serveur"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp"/>
+
+            <!-- Menu déroulant URLs -->
+            <Spinner
+                android:id="@+id/spinnerURLs"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@android:drawable/btn_dropdown"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Zone de texte URL -->
+            <EditText
+                android:id="@+id/etURL"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="URL du serveur"
+                android:inputType="textUri"
+                android:textSize="16sp"
+                android:padding="12dp"
+                android:background="@android:drawable/edit_text"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- Spinner chargement -->
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"/>
 
             <!-- Bouton Connexion -->
             <Button
@@ -116,3 +161,5 @@
         android:layout_marginTop="16dp"/>
 
 </LinearLayout>
+
+</ScrollView>

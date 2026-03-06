@@ -1,13 +1,12 @@
 package com.superowl.rftg.luigi.database;
 
 import com.superowl.rftg.luigi.models.Utilisateur;
-import com.superowl.rftg.luigi.utils.SessionManager;
-import org.json.JSONArray;
 import org.json.JSONObject;
+import java.security.MessageDigest;
 
 /**
- * DAO pour la table staff (utilisateurs)
- * Connexion au backend Toad via API REST
+ * DAO pour la table customers
+ * Authentification via POST /customers/verify (endpoint public, sans token)
  */
 public class StaffDAO {
 
@@ -15,50 +14,48 @@ public class StaffDAO {
     }
 
     /**
-     * Authentifier un utilisateur via le backend REST
-     * 1. POST /api/auth/login → récupère le token JWT
-     * 2. GET /staffs → trouve le staff correspondant au username
-     * @param username nom d'utilisateur
-     * @param password mot de passe
+     * Authentifier un customer via POST /customers/verify
+     * @param username email du customer
+     * @param password mot de passe en clair
      * @return Utilisateur si trouvé, null sinon
      */
-    public Utilisateur authenticate(String username, String password) {
+    private String hashMD5(String input) {
         try {
-            // Étape 1 : Authentification → obtenir le token JWT
-            JSONObject loginBody = new JSONObject();
-            loginBody.put("username", username);
-            loginBody.put("password", password);
-
-            String authResponse = ApiHelper.post("/api/auth/login", loginBody.toString());
-            if (authResponse == null) {
-                return null;
-            }
-
-            JSONObject authJson = new JSONObject(authResponse);
-            String token = authJson.getString("token");
-
-            // Stocker le token dans le SessionManager
-            SessionManager.setToken(token);
-
-            // Étape 2 : Récupérer les infos du staff connecté
-            String staffResponse = ApiHelper.get("/staffs", token);
-            if (staffResponse == null) {
-                return null;
-            }
-
-            JSONArray staffArray = new JSONArray(staffResponse);
-            for (int i = 0; i < staffArray.length(); i++) {
-                JSONObject staff = staffArray.getJSONObject(i);
-                if (staff.getString("username").equals(username)) {
-                    int id = staff.getInt("staffId");
-                    String lastName = staff.getString("lastName");
-                    String firstName = staff.getString("firstName");
-
-                    return new Utilisateur(id, username, lastName, firstName);
+            byte[] hash = MessageDigest.getInstance("MD5").digest(input.getBytes());
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(hash[i]);
+                if (hex.length() == 1) {
+                    sb.append('0');
+                    sb.append(hex.charAt(hex.length() - 1));
+                } else {
+                    sb.append(hex.substring(hex.length() - 2));
                 }
             }
+            return sb.toString();
+        } catch (Exception e) {
+            return input;
+        }
+    }
 
-            return null;
+    public Utilisateur authenticate(String username, String password) {
+        try {
+            JSONObject loginBody = new JSONObject();
+            loginBody.put("email", username);
+            loginBody.put("password", hashMD5(password));
+
+            String response = ApiHelper.post("/customers/verify", loginBody.toString());
+            if (response == null) {
+                return null;
+            }
+
+            JSONObject json = new JSONObject(response);
+            int customerId = json.getInt("customerId");
+            if (customerId == -1) {
+                return null;
+            }
+
+            return new Utilisateur(customerId, username, username, "");
         } catch (Exception e) {
             e.printStackTrace();
             return null;
